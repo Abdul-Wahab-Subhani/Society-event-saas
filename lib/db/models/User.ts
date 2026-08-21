@@ -1,4 +1,4 @@
-import { Schema, model, models, type Document, type Types } from "mongoose";
+import { Schema, model, models, type Document, type Types, type Model } from "mongoose";
 
 export type SocietyRole = "admin" | "organizer";
 
@@ -39,4 +39,4 @@ const UserSchema = new Schema<UserDocument>(
   { timestamps: true }
 );
 
-export const User = models.User || model<UserDocument>("User", UserSchema);
+export const User = (models.User as Model<UserDocument>) || model<UserDocument>("User", UserSchema);

@@ -1,4 +1,4 @@
-import { Schema, model, models, type Document, type Types } from "mongoose";
+import { Schema, model, models, type Document, type Types, type Model } from "mongoose";
 
 export type AutomationActionType =
   | "publish"
@@ -44,4 +44,5 @@ const AutomationLogSchema = new Schema<AutomationLogDocument>({
 });
 
 export const AutomationLog =
-  models.AutomationLog || model<AutomationLogDocument>("AutomationLog", AutomationLogSchema);
+  (models.AutomationLog as Model<AutomationLogDocument>) ||
+  model<AutomationLogDocument>("AutomationLog", AutomationLogSchema);

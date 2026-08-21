@@ -1,4 +1,4 @@
-import { Schema, model, models, type Document, type Types } from "mongoose";
+import { Schema, model, models, type Document, type Types, type Model } from "mongoose";
 
 export interface CertificateTemplate {
   backgroundUrl?: string;
@@ -41,4 +41,4 @@ const SocietySchema = new Schema<SocietyDocument>(
   { timestamps: true }
 );
 
-export const Society = models.Society || model<SocietyDocument>("Society", SocietySchema);
+export const Society = (models.Society as Model<SocietyDocument>) || model<SocietyDocument>("Society", SocietySchema);

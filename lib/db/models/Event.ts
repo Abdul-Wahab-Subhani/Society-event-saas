@@ -1,4 +1,4 @@
-import { Schema, model, models, type Document, type Types } from "mongoose";
+import { Schema, model, models, type Document, type Types, type Model } from "mongoose";
 
 export type EventStatus = "draft" | "published" | "ongoing" | "completed";
 
@@ -69,4 +69,4 @@ const EventSchema = new Schema<EventDocument>(
   { timestamps: true }
 );
 
-export const Event = models.Event || model<EventDocument>("Event", EventSchema);
+export const Event = (models.Event as Model<EventDocument>) || model<EventDocument>("Event", EventSchema);

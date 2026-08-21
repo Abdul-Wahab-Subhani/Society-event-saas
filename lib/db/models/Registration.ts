@@ -1,4 +1,4 @@
-import { Schema, model, models, type Document, type Types } from "mongoose";
+import { Schema, model, models, type Document, type Types, type Model } from "mongoose";
 
 export type RegistrationStatus =
   | "registered"
@@ -62,4 +62,5 @@ const RegistrationSchema = new Schema<RegistrationDocument>(
 RegistrationSchema.index({ eventId: 1, email: 1 }, { unique: true });
 
 export const Registration =
-  models.Registration || model<RegistrationDocument>("Registration", RegistrationSchema);
+  (models.Registration as Model<RegistrationDocument>) ||
+  model<RegistrationDocument>("Registration", RegistrationSchema);
