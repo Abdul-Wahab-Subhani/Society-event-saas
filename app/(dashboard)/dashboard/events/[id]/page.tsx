@@ -293,10 +293,10 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
             <div className="log-timeline space-y-5">
               {logs.map((log) => (
                 <div key={log._id} className="relative">
-                  <span className={`log-dot ${log.status === "success" ? "log-dot--pulse" : ""} ${LOG_DOT_COLOR[log.status]}`} />
+                  <span className={`log-dot ${log.status === "success" ? "log-dot--pulse" : ""} ${LOG_DOT_COLOR[log.status] ?? "bg-ink-muted text-ink-muted"}`} />
                   <div className="flex items-baseline justify-between gap-3">
                     <p className="text-sm font-medium capitalize">{log.actionType.replace(/_/g, " ")}</p>
-                    <span className={`stamp ${LOG_DOT_COLOR[log.status].split(" ")[1]}`}>{log.status}</span>
+                    <span className={`stamp ${(LOG_DOT_COLOR[log.status] ?? "text-ink-muted").split(" ")[1] ?? "text-ink-muted"}`}>{log.status}</span>
                   </div>
                   <p className="mt-0.5 font-mono text-xs text-ink-muted">
                     {new Date(log.runAt).toLocaleString("en-US")} · {log.recipientCount} recipient(s)
