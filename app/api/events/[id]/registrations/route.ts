@@ -14,7 +14,9 @@ const CSV_COLUMNS = [
   "createdAt",
 ] as const;
 
-function toCsv(rows: Record<string, unknown>[]): string {
+type CsvRow = Partial<Record<(typeof CSV_COLUMNS)[number], unknown>>;
+
+function toCsv(rows: CsvRow[]): string {
   const escape = (v: unknown) => `"${String(v ?? "").replace(/"/g, '""')}"`;
   const header = CSV_COLUMNS.join(",");
   const lines = rows.map((row) => CSV_COLUMNS.map((col) => escape(row[col])).join(","));
