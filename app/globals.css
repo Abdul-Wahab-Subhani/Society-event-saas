@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------
+   Design system: "event roster" — the physical objects of student
+   events (ticket stubs, stamped badges, sign-in sheets, a running log)
+   translated into UI. Tokens live in tailwind.config.ts; this file
+   holds the handful of treatments Tailwind utilities can't express.
+   ------------------------------------------------------------------ */
+
+:focus-visible {
+  outline: 2px solid #e8a33d;
+  outline-offset: 2px;
+}
+
+/* Signature element #1: the ticket-stub edge. A row of punched circles
+   along one side of a card, using a repeating radial-gradient mask —
+   used on event rows and registration cards, never decoratively on
+   every surface. */
+.ticket-edge {
+  position: relative;
+}
+.ticket-edge::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0;
+  bottom: 0;
+  width: 14px;
+  background-image: radial-gradient(circle at 7px 10px, #f7f7f4 4px, transparent 4.5px);
+  background-size: 14px 16px;
+  background-repeat: repeat-y;
+}
+
+/* Signature element #2: the stamp badge — status labels styled like an
+   ink stamp on a form, with a slight rotation and a doubled border. */
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 4px;
+  border: 1.5px solid currentColor;
+  transform: rotate(-1.5deg);
+}
+
+/* Automation log timeline */
+.log-timeline {
+  position: relative;
+  padding-left: 22px;
+}
+.log-timeline::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 1.5px;
+  background: #e1e0d9;
+}
+.log-dot {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid #f7f7f4;
+}
+.log-dot--pulse::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  opacity: 0.5;
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.7); opacity: 0.6; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Loading skeletons */
+.skeleton {
+  background: linear-gradient(90deg, #edece6 25%, #f5f4ef 37%, #edece6 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.6s ease infinite;
+  border-radius: 6px;
+}
+@keyframes skeleton-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+/* Toasts */
+@keyframes toast-in {
+  from { transform: translateY(6px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.toast-enter {
+  animation: toast-in 0.18s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton,
+  .toast-enter,
+  .log-dot--pulse::after,
+  .animate-ping,
+  .animate-spin,
+  .animate-bounce {
+    animation: none !important;
+  }
+}
